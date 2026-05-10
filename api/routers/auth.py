@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Annotated, Optional
 from pydantic import BaseModel
 from jose import jwt, JWTError
-from fastapi import APIRouter, status, HTTPException, Depends
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi.security import OAuth2PasswordRequestForm 
 from api.models import User
 from api.deps import db_dependency, user_dependency, bcrypt_context
 
@@ -55,7 +55,7 @@ async def register_user(db:db_dependency, register_user_request:RegisterUserRequ
     db.add(User(
         username = register_user_request.username,
         name = register_user_request.name,
-        hashed_password = bcrypt_context.hash(register_user_request.password) 
+        hashed_password = bcrypt_context.hash(register_user_request.password)
     ))
     db.commit()
 
@@ -63,7 +63,7 @@ async def register_user(db:db_dependency, register_user_request:RegisterUserRequ
 async def login_for_access_token(db:db_dependency, form_data:Annotated[OAuth2PasswordRequestForm, Depends()]):
     user:User = authenticate_user(db=db, username=form_data.username, password=form_data.password)
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user') 
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user')
     return {
         'access_token': create_access_token(id=user.id, username=user.username, name=user.name, expires_delta=timedelta(minutes=20)),
         'token_type': 'bearer'

@@ -1,41 +1,41 @@
 # # # Python and venv
 
-# Via APT: python, pip and venv
+# Via APT: Installing python, pip and venv
 sudo apt install -y python3.11
 sudo apt install -y python3-pip
 sudo apt install -y python3.11-venv
 python3.11 -m venv .venv
 
-# Via Pyenv: python, pip and venv
+# Via pyenv: Installing python, pip and venv
 pyenv -v
 pyenv install --list
-pyenv install 3.11.14
+pyenv install 3.11.14 # pyenv builds Python with pip, venv and ensurepip. ensurepip is a standard Python module whose only job is to make sure pip exists and works for a given Python installation.
 pyenv versions
-pyenv local 3.11.14
+pyenv local 3.11.14  # This create the .python-version file in the directory
 python -m venv .venv
 
 source .venv/bin/activate
 which python
 which pip
-pip install --upgrade pip
 
 # Installing libraries
 touch requirements.txt
-fastapi[standard]>=
-SQLAlchemy>=
-passlib>=
-bcrypt>=
-python-jose>=
-python-dotenv>=
-pydantic>=
+fastapi[standard]>=0.112.0,<0.113
+SQLAlchemy>=2.0.32,<2.1
+passlib>=1.7.4,<1.8
+bcrypt>=4.2.0,<4.3
+python-jose>=3.3.0,<3.4
+python-dotenv>=1.0.1,<1.1
+pydantic>=2.8.2,<2.9
 
+pip install --upgrade pip 
 pip install -r requirements.txt
 pip list
 
 
 
-# # # Github
-https://github.com/adeloaleman -> webapp-fastapi.git
+# # # Github 
+https://github.com/adeloaleman and create a repository: webapp-fastapi
 https://github.com/github/gitignore
 touch .gitignore
 touch README.md
@@ -44,13 +44,13 @@ git branch -M main
 git branch --show-current
 git add .
 git add -A
-git commit -m "First commit"
+git commit -m 'First commit'
 git remote add origin git@github.com:adeloaleman/webapp-fastapi.git
 git remote add origin git@github-codeastute:codeastute/webapp-fastapi.git
-git remote set-url origin git@github.com:adeloaleman/webapp-fastapi.git
-git remote show origin
-git push -u origin main
-git push --force origin main
+git remote set-url origin git@github.com:adeloaleman/webapp-fastapi.git  # In case we want to modify it
+git remote show origin  # To show the configured remote repository
+git push -u origin main 
+git push --force origin main  # In case we have another local repository pushing to the same remote repository, we'll only be able to push by using the --force flag. This is only to be used when we are SURE that we want to overwrite the remote branch with our local state
 git push
 git clone git@github.com:adeloaleman/webapp-fastapi.git
 git pull origin main
@@ -59,7 +59,7 @@ git pull origin main
 
 # # # FastAPI project
 touch .env
-AUTH_SECRET_KEY=
+AUTH_SECRET_KEY=197b2c37c391bed93fe80344fe73b806947a65e36206e05a1a23c2fa12702fe3
 AUTH_ALGORITHM=HS256
 API_URL=http://localhost:3000
 touch Procfile
@@ -73,7 +73,7 @@ mkdir api/routers
 touch api/routers/__init__.py
 touch api/routers/auth.py
 
-fastapi run main.py --port 8000
+fastapi run main.py --port 8000  # Server started at http://0.0.0.0:8000  |  This mean the server is running and reachable via any of this machine's IP addresses on port 8000  |  0.0.0.0 = bind address (who the server listens to) 8000 = port  |  0.0.0.0 means "any address". It's not a real destination.
 
 
 
